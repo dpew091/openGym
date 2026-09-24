@@ -4,7 +4,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-14
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -13,7 +13,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Install Project Dependencies
         run: npm ci
@@ -44,4 +43,3 @@ jobs:
         with:
           name: openGym-ios-ipa
           path: ios/App/build/openGym.ipa
- 
