@@ -13,7 +13,7 @@ workflows:
       - name: Install Project Dependencies
         script: npm install --legacy-peer-deps
       - name: Build Web Application
-        script: npm run build
+        script: npx vite build
       - name: Configure Capacitor iOS Package
         script: |
           npm install @capacitor/ios
