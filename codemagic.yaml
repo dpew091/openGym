@@ -1,0 +1,36 @@
+
+workflows:
+  ios-build:
+    name: Build iOS App
+    max_build_duration: 30
+    instance_type: mac_mini_m1
+    environment:
+      node: 20
+    triggering:
+      events:
+        - push
+    scripts:
+      - name: Install Project Dependencies
+        script: npm install --legacy-peer-deps
+      - name: Build Web Application
+        script: npm run build
+      - name: Configure Capacitor iOS Package
+        script: |
+          npm install @capacitor/ios
+          npx cap add ios
+          npx cap sync ios
+      - name: Compile Unsigned Native App
+        script: |
+          cd ios/App
+          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -sdk iphoneos CODE_SIGNING_ALLOWED=NO OBJROOT=$PWD/build SYMROOT=$PWD/build
+      - name: Package App Package into IPA
+        script: |
+          mkdir -p ios/App/build/Payload
+          mv ios/App/build/Release-iphoneos/App.app ios/App/build/Payload/
+          cd ios/App/build
+          zip -r openGym.ipa Payload
+    artifacts:
+      - ios/App/build/openGym.ipa
+
+
+
