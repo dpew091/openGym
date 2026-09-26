@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Project Dependencies
-        run: npm ci
+        run: npm install --legacy-peer-deps
 
       - name: Build Web Assets
         run: npm run build
@@ -38,4 +38,5 @@ jobs:
         with:
           name: openGym-ios-ipa
           path: ios/App/build/openGym.ipa
+
 
